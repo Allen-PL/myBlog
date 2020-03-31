@@ -1,4 +1,4 @@
-Django==2.0.5
+Django==2.2.10
 django-contrib-comments==1.8.0
 django-crispy-forms==1.7.2
 django-ipware==2.1.0

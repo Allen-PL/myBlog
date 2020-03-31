@@ -1,0 +1,56 @@
+<div class="post post-layout-list" data-aos="fade-up">
+    <div class="postnormal review">
+        <div class="post-container review-item">
+            <div class="row review-item-wrapper">
+                <div class="col-sm-3">
+                    <a rel="nofollow" href="{{ post.get_absolute_url }}">
+                        {% if post.cover %}
+                            <div class="review-item-img" style="background-image: url(/upload/{{ post.cover }});"></div>
+                        {% else %}
+                            <div class="review-item-img" style="background-image: url(/statics/images/tmp/l.jpg);"></div>
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-sm-9 flex-xs-middle">
+                    <div class="review-item-title">
+                        <a href="{{ post.get_absolute_url }}">{{ post.name }}
+                            {% if post.is_top %}
+                                <img src="/statics/images/svg/top.svg">
+                            {% endif %}
+                        </a>
+                        {% if user.is_authenticated %}
+                            <a href="/admin/blog/article/{{ post.id }}/change/"><img src="/statics/images/svg/edit.svg" width="20" height="20"></a>
+                            <!--<a href="/post/edit/{{ post.id }}"><img src="/statics/images/svg/edit.svg" width="20" height="20"></a>-->
+                        {% endif %}
+                    </div>
+                    <div class="review-item-creator"><b>发布日期：</b>{{ post.publish_time|date:'Y-m-d h:m' }}</div>
+                    <span class="review-item-info"><b>总浏览量：</b>{{ post.views }}</span>
+                </div>
+            </div>
+            <div class="review-bg-wrapper">
+                {% if post.cover %}
+                    <div class="bg-blur" style="background-image: url(/upload/{{ post.cover }});"></div>
+                {% else %}
+                    <div class="bg-blur" style="background-image: url(/statics/images/l_post.jpg);"></div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="post-container">
+            <div class="entry-content">
+                {% autoescape off %}
+                    {{ post.excerpt }}
+                {% endautoescape %}
+            </div>
+            <div class="post-footer">
+                <div class="review-item-tag"><img src="/statics/images/svg/tag.svg">
+                    {% for tag in  post.tags.all %}
+                        <a href="/tag/{{tag.slug}}" class="tag">{{tag.name}}</a>
+                    {% empty %}
+                        <a class="tag">未设置标签</a>
+                    {% endfor %}
+                </div>
+                <a class="gaz-btn primary pull-right" href="{{ post.get_absolute_url }}">阅读更多</a>
+            </div>
+        </div>
+    </div>
+</div>

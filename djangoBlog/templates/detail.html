@@ -1,0 +1,129 @@
+{% extends "layout/base.html" %}
+{% block title %}
+| {{ post.name }}
+{% endblock %}
+
+{% block content %}
+<div id="main" class="content">
+    <div class="container">
+        <section class="post_content">
+            <header class="post_header">
+                <h1 class="post_title">{{ post.name }}
+                    {% if user.is_staff %}
+                    <a href="/admin/blog/article/{{ post.id }}/change/"><img src="/statics/images/svg/edit.svg"
+                                                                             width="20" height="20"></a>
+                    <!--<a href="/post/edit/{{ post.id }}"><img src="/statics/images/svg/edit.svg" width="20" height="20"></a>-->
+                    {% endif %}
+                </h1>
+            </header>
+            <div class="post-body">
+                {% autoescape off %}
+                {{ post.content }}
+                {% endautoescape %}
+            </div>
+            <hr/>
+            <div class="meta split split--responsive cf">
+                <div class="split__title">
+                    <time>{{ post.publish_time|date:'Y-m-d' }} |</time>
+                    {% for tag in post.tags.all %}
+                    <a href="/tag/{{tag.name}}" class="tag">{{tag.name}}</a>
+                    {% empty %}
+                    <a class="tag">未设置标签</a>
+                    {% endfor %}
+                </div>
+                <div class="slide">
+                    <a class="btn-slide" title="switch down"><img src="/statics/images/svg/comment.svg">折叠评论区</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div id="panel">
+        <div class="comment-area">
+            <section class="comments">
+                <div class="comments-main">
+                    <div class="comments-list">
+                        <ul class="commentwrap">
+                            <li class="comment even thread-even depth-1" id="li-comment-">
+                                <div class="comment_body contents">
+                                {% if not 0 %}
+                                    <div style="text-align: center">
+                                        <a href="#">登录</a>发布评论！
+                                    </div>
+                                {% endif %}
+                                {% if True %}
+                                    <div class="profile">
+                                        <a href=""><img src="/statics/images/favicon.png"
+                                                        class="gravatar" alt="小布丁"></a>
+                                    </div>
+                                    <div class="main shadow">
+                                        <div class="commentinfo">
+                                            <section class="commeta">
+                                                <div class="shang">
+                                                    <h4 class="author"><a href="" target="_blank"><img
+                                                            src="/statics/images/favicon.png"
+                                                            class="gravatarsmall" alt="小布丁">游客</a></h4>
+                                                </div>
+                                            </section>
+                                        </div>
+                                        <p>评论内容</p>
+                                        <div class="xia info">
+                                            <span>3天前<a rel='nofollow' class='comment-reply-link'
+                                                     onclick='return addComment.moveForm( "comment-969", "969", "respond", "1202" )'
+                                                     aria-label='回复给小布丁'>·回复</a></span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                </div>
+                            </li>
+                            <!-- #comment-## -->
+                        </ul>
+                    </div>
+
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
+
+<div class="navpost-part">
+    <div id="NextPrevPosts">
+        <div class="prev" data-aos="slide-right" data-aos-delay="1.5s">
+            <div class="arrow"><img src="/statics/images/svg/left.svg"></div>
+            <div class="preview">
+                {% if prev_post %}
+                {% if prev_post.cover %}
+                <div class="pull-left featuredImg" style="background-image:url(/upload/{{ prev_post.cover }});"></div>
+                {% else %}
+                <div class="pull-left featuredImg" style="background-image:url('/statics/images/empty.png');"></div>
+                {% endif %}
+                <a class="pull-left preview-content bold" href="{{ prev_post.get_absolute_url }}"><span>{{ prev_post.name }}</span></a>
+                {% else %}
+                <div class="pull-left featuredImg" style="background-image:url('/statics/images/empty.png');"></div>
+                <a class="pull-left preview-content bold" href="#"><span>拜托！泥垢了</span></a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="next" data-aos="slide-left" data-aos-delay="1.5s">
+            <div class="arrow"><img src="/statics/images/svg/right.svg"></div>
+            <div class="preview">
+                {% if next_post %}
+                {% if next_post.cover %}
+                <div class="pull-right featuredImg" style="background-image:url(/upload/{{ next_post.cover }});"></div>
+                {% else %}
+                <div class="pull-right featuredImg" style="background-image:url('/statics/images/empty.png');"></div>
+                {% endif %}
+                <a class="pull-right preview-content bold" href="{{ next_post.get_absolute_url }}"><span>{{ next_post.name }}</span></a>
+                {% else %}
+                <div class="pull-right featuredImg" style="background-image:url('/statics/images/empty.png');"></div>
+                <a class="pull-right preview-content bold" href="#"><span>哼！我也是有底线的</span></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
